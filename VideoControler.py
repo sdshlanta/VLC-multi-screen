@@ -80,7 +80,7 @@ def main():
 
             print(
                 "[q]: Quit " \
-                "[p]: Play/Pause " \
+                "[p/' ']: Play/Pause " \
                 "[r]: Restart Video " \
                 "[f]: Toggle Full Screen",
                 end="\r"
