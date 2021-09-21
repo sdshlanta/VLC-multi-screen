@@ -43,11 +43,12 @@ def main():
         player.play()
 
     # hide warnings from VLC
-    for player in players:
-        instance = player.get_instance()
-        instance.log_set(null_log_callback, None)
+    if not args.verbose:
+        for player in players:
+            instance = player.get_instance()
+            instance.log_set(null_log_callback, None)
 
-    os.environ["VLC_VERBOSE"] = str("-1")
+        os.environ["VLC_VERBOSE"] = str("-1")
 
     # Delay to allow VLC to load media
     time.sleep(0.2)
@@ -106,6 +107,11 @@ if __name__ == '__main__':
         '-w', '--windows',
         help='The number of windows to create, defaults to 2.',
         type=int, default=2
+    )
+    parser.add_argument(
+        '-v', '--verbose',
+        help='Enable verbose logging.',
+        action='store_true'
     )
     args = parser.parse_args()
 
