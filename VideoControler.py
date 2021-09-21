@@ -101,8 +101,9 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Control a VLC media player.')
     parser.add_argument('media' , help='The media file to play.')
     parser.add_argument(
-        '-s', '--screens',
-        help='The number of screens to use', type=int, default=2
+        '-w', '--windows',
+        help='The number of windows to create, defaults to 2.',
+        type=int, default=2
     )
     args = parser.parse_args()
 
