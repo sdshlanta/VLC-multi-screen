@@ -30,6 +30,23 @@ def null_log_callback(data, level, ctx, fmt, args):
 def main():
     global exiting
 
+    # Check that the media file exists/is accessible, if not, exit. We use a try
+    # block here because if the file doesn't exist, we get a PermissionError and 
+    # os.access() is not always effective.
+    try:
+        with open(args.media, 'r') as f:
+            pass
+    except FileNotFoundError:
+        print(
+            f"Media file {args.media} does not exist!"
+        )
+        return
+    except PermissionError:
+        print(
+            f"Media file {args.media} is not accessible!"
+        )
+        return
+
     # Create MediaPlayer objects and filter out any invalid ones (there 
     # shouldn't be any I'm just making Pylance happy).
     players: List[vlc.MediaPlayer] = list(
