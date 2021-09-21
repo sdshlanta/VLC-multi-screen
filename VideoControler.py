@@ -33,7 +33,7 @@ def main():
     # Create MediaPlayer objects and filter out any invalid ones (there 
     # shouldn't be any I'm just making Pylance happy).
     players: List[vlc.MediaPlayer] = list(
-        filter(None, [vlc.MediaPlayer() for _ in range(args.screens)])
+        filter(None, [vlc.MediaPlayer() for _ in range(args.windows)])
     )
 
     # Load media
