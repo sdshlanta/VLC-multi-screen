@@ -20,6 +20,10 @@ def toggle_loop_settings():
         for item in values:
             yield item
                 
+def volume_values():
+    while not exiting:
+        for i in range(0, 101, 5):
+            yield i
 
 def action_control_thread(players: List[vlc.MediaListPlayer], media_time, adjust_time = 2000):
     media_time -= adjust_time
@@ -114,6 +118,8 @@ def main():
     # Hacky forever looping iterator to loop through playlist loop control
     # states.
     loop_control_state: Iterator = toggle_loop_settings()
+    volume_value: Iterator = volume_values()
+
 
     # handle keyboard input
     try:
@@ -140,6 +146,10 @@ def main():
                 loop_state = next(loop_control_state)
                 for player in players:
                     player.set_playback_mode(loop_state)
+            elif key == 'v':
+                volume = next(volume_value)
+                for player in players:
+                    player.get_media_player().audio_set_volume(volume)
 
             print(
                 "[q]: Quit " \
@@ -148,7 +158,8 @@ def main():
                 "[f]: Toggle Full Screen " \
                 "[n]: Next Video " \
                 "[p]: Previous Video " \
-                "[l]: Toggle Loop Mode", 
+                "[l]: Toggle Loop Mode " \
+                "[v]: Volume Up/Down ",
                 end="\r"
             )
             try:
