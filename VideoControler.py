@@ -151,15 +151,18 @@ def main():
                 for player in players:
                     player.get_media_player().audio_set_volume(volume)
 
-            print(
-                "[q]: Quit " \
-                "[' ']: Play/Pause " \
-                "[r]: Restart Video " \
-                "[f]: Toggle Full Screen " \
-                "[n]: Next Video " \
-                "[p]: Previous Video " \
-                "[l]: Toggle Loop Mode " \
-                "[v]: Volume Up/Down ",
+            print(' '.join(
+                    [
+                        "[q]: Quit",
+                        "[' ']: Play/Pause",
+                        "[r]: Restart Video",
+                        "[f]: Toggle Full Screen",
+                        "[n]: Next Video",
+                        "[p]: Previous Video",
+                        "[l]: Toggle Loop Mode",
+                        "[v]: Volume Up/Down",
+                    ]
+                ),
                 end="\r"
             )
             try:
