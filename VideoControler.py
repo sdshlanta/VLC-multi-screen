@@ -121,7 +121,7 @@ def main():
         while not exiting:
             if key == 'q':
                 exiting = True
-            elif key == 'p' or key == ' ':
+            elif key == ' ':
                 for player in players:
                     player.pause()
             elif key == 'r':
@@ -133,6 +133,9 @@ def main():
             elif key == 'n':
                 for player in players:
                     player.next()
+            elif key == 'p':
+                for player in players:
+                    player.previous()
             elif key == 'l':
                 loop_state = next(loop_control_state)
                 for player in players:
@@ -140,10 +143,11 @@ def main():
 
             print(
                 "[q]: Quit " \
-                "[p/' ']: Play/Pause " \
+                "[' ']: Play/Pause " \
                 "[r]: Restart Video " \
                 "[f]: Toggle Full Screen " \
                 "[n]: Next Video " \
+                "[p]: Previous Video " \
                 "[l]: Toggle Loop Mode", 
                 end="\r"
             )
