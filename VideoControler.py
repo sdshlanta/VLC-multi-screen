@@ -89,12 +89,13 @@ def main():
         player.get_media_player().set_time(1000)
 
     # hide warnings from VLC
-    if not args.verbose:
+    if args.verbose:
+        os.environ["VLC_VERBOSE"] = str("3")
+    else:
         for player in players:
             instance = player.get_instance()
             instance.log_set(null_log_callback, None)
-
-    os.environ["VLC_VERBOSE"] = str("3")
+        os.environ["VLC_VERBOSE"] = str("-1")
 
     # Set players to loop
     for player in players:
