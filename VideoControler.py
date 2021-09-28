@@ -8,6 +8,8 @@ import time
 from typing import Iterator, List
 
 import vlc
+import win32api
+import win32gui
 
 exiting = False
 
@@ -80,10 +82,20 @@ def main():
         filter(None, [vlc.MediaListPlayer() for _ in range(args.windows)])
     )
 
-    # Load media
-    for player in players:
+    # Load media and position windows
+    window_handles = []
+    for i, player in enumerate(players, start=1):
         player.set_media_list(media_list)
         player.play()
+        time.sleep(0.5)
+        hwnd = win32gui.FindWindow(None, 'VLC (Direct3D11 output)')
+        window_handles.append(hwnd)
+
+        monitor = win32api.EnumDisplayMonitors()[i]
+        monitor_info = win32api.GetMonitorInfo(monitor[0])
+        monotor_position = monitor_info['Monitor']
+        win32gui.MoveWindow(hwnd, monotor_position[0], monotor_position[1], monotor_position[2], monotor_position[3], True)
+
 
     # Delay to allow VLC to load media
     time.sleep(0.2)
@@ -101,14 +113,10 @@ def main():
             instance.log_set(null_log_callback, None)
         os.environ["VLC_VERBOSE"] = str("-1")
 
-    # Set players to loop
+    # Set players to loop and enable full screen
     for player in players:
         player.set_playback_mode(vlc.PlaybackMode.loop)
-
-    # Hack to skip the first second of the video
-    for player in players:
-        player.get_media_player().set_time(1000)
-        
+        player.get_media_player().toggle_fullscreen()
 
     # Startup loop controll thread
     media_time = players[0].get_media_player().get_length()
