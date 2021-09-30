@@ -88,8 +88,11 @@ def main():
     for i, player in enumerate(players, start=1):
         player.set_media_list(media_list)
         player.play()
-        time.sleep(0.5)
-        hwnd = win32gui.FindWindow(None, 'VLC (Direct3D11 output)')
+
+        hwnd = 0
+        while hwnd is 0:
+            hwnd = win32gui.FindWindow(None, 'VLC (Direct3D11 output)')
+
         window_handles.append(hwnd)
 
         monitor = win32api.EnumDisplayMonitors()[i]
