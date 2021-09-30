@@ -10,6 +10,7 @@ from typing import Iterator, List
 import vlc
 import win32api
 import win32gui
+import win32con
 
 exiting = False
 
@@ -124,11 +125,11 @@ def main():
     thread.start()
 
     # Hacky forever looping iterator to loop through playlist loop control
-    # states.
+    # states and volume values.
     loop_control_state: Iterator = toggle_loop_settings()
     volume_value: Iterator = volume_values()
 
-
+    minimized = False
     # handle keyboard input
     try:
         key = ''
@@ -158,6 +159,15 @@ def main():
                 volume = next(volume_value)
                 for player in players:
                     player.get_media_player().audio_set_volume(volume)
+            elif key == 'm':
+                for window in window_handles:
+                    if minimized:
+                        win32gui.ShowWindow(window, win32con.SW_MAXIMIZE)
+                        player.get_media_player().toggle_fullscreen()
+                    else:
+                        
+                        win32gui.ShowWindow(window, win32con.SW_MINIMIZE)
+                minimized = not minimized
 
             print(' '.join(
                     [
@@ -169,6 +179,7 @@ def main():
                         "[p]: Previous Video",
                         "[l]: Toggle Loop Mode",
                         "[v]: Volume Up/Down",
+                        "[m]: Toggle Minimize",
                     ]
                 ),
                 end="\r"
