@@ -51,6 +51,11 @@ def null_log_callback(data, level, ctx, fmt, args):
 def main():
     global exiting
 
+    # Detect OS
+    if os.name != "nt":
+        print("Only Windows is supported at this time.")
+        return
+
     media_list = vlc.MediaList()
     if media_list is None:
         print("Failed to create media list")
