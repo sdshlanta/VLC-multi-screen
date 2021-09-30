@@ -89,6 +89,10 @@ def main():
         player.set_media_list(media_list)
         player.play()
 
+        # Sleep required to ensure that window gets put on the correct screen. 
+        # Otherwise, the window will be on the primary screen. (so weird)
+        time.sleep(0.5)
+
         hwnd = 0
         while hwnd is 0:
             hwnd = win32gui.FindWindow(None, 'VLC (Direct3D11 output)')
