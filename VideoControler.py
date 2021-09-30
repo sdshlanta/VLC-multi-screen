@@ -162,8 +162,7 @@ def main():
             elif key == 'm':
                 for window in window_handles:
                     if minimized:
-                        win32gui.ShowWindow(window, win32con.SW_MAXIMIZE)
-                        player.get_media_player().toggle_fullscreen()
+                        win32gui.ShowWindow(window, win32con.SHOW_FULLSCREEN)
                     else:
                         
                         win32gui.ShowWindow(window, win32con.SW_MINIMIZE)
