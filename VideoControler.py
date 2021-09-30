@@ -104,10 +104,6 @@ def main():
         monotor_position = monitor_info['Monitor']
         win32gui.MoveWindow(hwnd, monotor_position[0], monotor_position[1], monotor_position[2], monotor_position[3], True)
 
-
-    # Delay to allow VLC to load media
-    time.sleep(0.2)
-
     # Sync up footage after play starts
     for player in players:
         player.get_media_player().set_time(1000)
@@ -171,7 +167,6 @@ def main():
                     if minimized:
                         win32gui.ShowWindow(window, win32con.SHOW_FULLSCREEN)
                     else:
-                        
                         win32gui.ShowWindow(window, win32con.SW_MINIMIZE)
                 minimized = not minimized
 
