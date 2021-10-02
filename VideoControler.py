@@ -5,6 +5,7 @@ import msvcrt
 import os
 import threading
 import time
+import random
 from typing import Iterator, List
 
 import vlc
@@ -56,6 +57,10 @@ def main():
         print("Only Windows is supported at this time.")
         return
 
+    
+    if args.shuffle:
+        random.shuffle(args.media_files)
+
     media_list = vlc.MediaList()
     if media_list is None:
         print("Failed to create media list")
@@ -78,9 +83,6 @@ def main():
             )
 
         media_list.add_media(vlc.Media(media_file))
-    
-
-
 
     # Create MediaPlayer objects and filter out any invalid ones (there 
     # shouldn't be any I'm just making Pylance happy).
@@ -217,6 +219,11 @@ if __name__ == '__main__':
     parser.add_argument(
         '-v', '--verbose',
         help='Enable verbose logging.',
+        action='store_true'
+    )
+    parser.add_argument(
+        '-s', '--shuffle',
+        help='Shuffle the playlist at initial load.',
         action='store_true'
     )
     args = parser.parse_args()
