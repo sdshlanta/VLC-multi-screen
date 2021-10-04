@@ -172,9 +172,9 @@ def main():
             elif key == 'm':
                 for window in window_handles:
                     if minimized:
-                        win32gui.ShowWindow(window, win32con.SHOW_FULLSCREEN)
+                        win32gui.ShowWindow(window, win32con.SW_SHOW)
                     else:
-                        win32gui.ShowWindow(window, win32con.SW_MINIMIZE)
+                        win32gui.ShowWindow(window, win32con.SW_HIDE)
                 minimized = not minimized
 
             print(' '.join(
