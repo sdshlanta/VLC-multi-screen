@@ -92,7 +92,7 @@ def main():
 
     # Load media and position windows
     window_handles = []
-    for i, player in enumerate(players, start=1):
+    for i, player in enumerate(players, start=3-args.windows):
         player.set_media_list(media_list)
         player.play()
 
@@ -146,7 +146,7 @@ def main():
         while not exiting:
             if key == 'q':
                 exiting = True
-            elif key == ' ':
+            elif key == ' ' or key == 'p':
                 for player in players:
                     player.pause()
             elif key == 'r':
@@ -155,10 +155,10 @@ def main():
             elif key == 'f':
                 for player in players:
                     player.get_media_player().toggle_fullscreen()
-            elif key == 'n':
+            elif key == '.' or key == '>':
                 for player in players:
                     player.next()
-            elif key == 'p':
+            elif key == ',' or key == '<':
                 for player in players:
                     player.previous()
             elif key == 'l':
@@ -180,11 +180,11 @@ def main():
             print(' '.join(
                     [
                         "[q]: Quit",
-                        "[' ']: Play/Pause",
+                        "[' '/p]: Play/Pause",
                         "[r]: Restart Video",
                         "[f]: Toggle Full Screen",
-                        "[n]: Next Video",
-                        "[p]: Previous Video",
+                        "[<]: Previous Video",
+                        "[>]: Next Video",
                         "[l]: Toggle Loop Mode",
                         "[v]: Volume Up/Down",
                         "[m]: Toggle Minimize",
@@ -209,12 +209,18 @@ def main():
     print('')
             
 if __name__ == '__main__':
+    num_monitors = len(win32api.EnumDisplayMonitors())
+    if num_monitors - 1 > 0:
+        num_monitors -= 1
+    
     parser = argparse.ArgumentParser(description='Control a VLC media player.')
     parser.add_argument('media_files', nargs="+", help='The media file to play.')
     parser.add_argument(
         '-w', '--windows',
-        help='The number of windows to create, defaults to 2.',
-        type=int, default=2
+        help=f'The number of windows to create, defaults to {num_monitors}. '  \
+             f'(Will place them on the non-primary monitor by default unless ' \
+             f'there is only one monitor)',
+        type=int, default=num_monitors
     )
     parser.add_argument(
         '-v', '--verbose',
@@ -227,5 +233,5 @@ if __name__ == '__main__':
         action='store_true'
     )
     args = parser.parse_args()
-
+    print(args.windows)
     main()
