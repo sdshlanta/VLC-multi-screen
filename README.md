@@ -48,11 +48,11 @@ During playback the following controls are available in the terminal:
 
 ```
 [q]: Quit
-[' ']: Play/Pause
+[' '/p]: Play/Pause
 [r]: Restart Video
 [f]: Toggle Full Screen
-[n]: Next Video
-[p]: Previous Video
+[<]: Previous Video
+[>]: Next Video
 [l]: Toggle Loop Mode
 [v]: Volume Up/Down
 [m]: Toggle Minimize
