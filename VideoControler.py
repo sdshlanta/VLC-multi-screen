@@ -233,5 +233,12 @@ if __name__ == '__main__':
         action='store_true'
     )
     args = parser.parse_args()
-    print(args.windows)
+
+    # Print number of windows to be generated
+    if args.verbose:
+        print(
+            'Number of windows to generate:',
+            args.windows
+        )
+
     main()
