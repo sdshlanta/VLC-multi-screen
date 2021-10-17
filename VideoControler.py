@@ -92,7 +92,7 @@ def main():
 
     # Load media and position windows
     window_handles = []
-    for i, player in enumerate(players, start=3-args.windows):
+    for i, player in enumerate(players, start=num_monitors-args.windows):
         player.set_media_list(media_list)
         player.play()
 
@@ -211,16 +211,16 @@ def main():
 if __name__ == '__main__':
     num_monitors = len(win32api.EnumDisplayMonitors())
     if num_monitors - 1 > 0:
-        num_monitors -= 1
+        available_monitors = num_monitors - 1
     
     parser = argparse.ArgumentParser(description='Control a VLC media player.')
     parser.add_argument('media_files', nargs="+", help='The media file to play.')
     parser.add_argument(
         '-w', '--windows',
-        help=f'The number of windows to create, defaults to {num_monitors}. '  \
-             f'(Will place them on the non-primary monitor by default unless ' \
-             f'there is only one monitor)',
-        type=int, default=num_monitors
+        help=f'The number of windows to create, defaults to '  \
+             f'{available_monitors}. (Will place them on the non-primary ' \
+             f'monitor by default unless there is only one monitor)',
+        type=int, default=available_monitors
     )
     parser.add_argument(
         '-v', '--verbose',
